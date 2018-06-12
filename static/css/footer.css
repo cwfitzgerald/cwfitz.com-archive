@@ -14,21 +14,3 @@ body {
 .footer {
     flex-shrink: 0;
 }
-
-.nav-item{
-    width: 100%;
-}
-.head-nav{
-    padding-top: 10px;
-    padding-bottom: 10px;
-    padding-left: 10px;
-    padding-right: 10px;
-}
-@media (max-width: 990px) {
-    .nav-bar  a{
-        width: 200%;
-    }
-.nav-bar img{
-    margin-left: 60%;
-}
-}

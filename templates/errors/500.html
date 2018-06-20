@@ -1,0 +1,15 @@
+{% extends "layout.html" %}
+
+{% block head %}
+    <title>500</title>
+{% endblock head %}
+
+{% block content %}
+    <div class="text-center">
+        <h1>
+            500! Internal Server Error!
+        </h1>
+
+        <p>We're sorry about that. Try again in a couple minutes or try going <a href="#" onClick="history.go(-1)">back</a> to the <a href="{{ url_for('hello_world') }}">home page.</a></p>
+    </div>
+{% endblock content %}

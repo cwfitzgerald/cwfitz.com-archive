@@ -1,0 +1,15 @@
+{% extends "layout.html" %}
+
+{% block head %}
+    <title>404</title>
+{% endblock head %}
+
+{% block content %}
+    <div class="text-center">
+        <h1>
+            404! Page Not Found!
+        </h1>
+
+        <p>Try checking the URL again or going <a href="#" onClick="history.go(-1)">back</a> to the <a href="{{ url_for('hello_world') }}">home page.</a></p>
+    </div>
+{% endblock content %}

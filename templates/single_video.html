@@ -1,0 +1,28 @@
+{% extends "layout.html" %}
+
+{% block content %}
+    <div class="text-center">
+        <h1 class="">{{ title }}</h1>
+        <img src="{{ url_for('static', filename=("video_thumbnails/" + thumbnail_url)) }}" class="w-100 mb-3"/>
+
+        <h5 class="font-weight-bold">Description:</h5>
+
+        <div>
+            {{ description | safe }}
+        </div>
+
+        {% if youtube_url %}
+            Watch via <a href="http://youtube.com/watch?v={{ youtube_url }}">Youtube</a>.
+            <br/>
+        {% endif %}
+        {% if vimeo_url %}
+            Watch via <a href="http://vimeo.com/{{ vimeo_url }}">Vimeo</a>.
+            <br/>
+        {% endif %}
+        {% if static_download %}
+            Watch or Download <a href="#{{ download_url }}">Directly</a>.
+        {% endif %}
+    </div>
+
+
+{% endblock content %}

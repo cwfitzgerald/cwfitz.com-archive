@@ -3,12 +3,18 @@
 {% block content %}
     <h2 class="mb-1 ml-2"><a href="{{ url_for('video_list') }}">Videos</a></h2>
 
-    {% for thumbnail, title, description, youtube_url, vimeo_url, download_url in video_list %}
+    {% for thumbnail, title, description, youtube_url, vimeo_url, download_url, webpage_url in video_list %}
         <div class="border mt-3 rounded">
             <div class="media m-2">
-                <img class="align-self-center mr-3" src="{{ url_for('static', filename=('video_thumbnails/'+thumbnail)) }}" alt="{{ title }}" style="width: 150px;">
+                {% set full_webpage_url = url_for('video_info', page_name=webpage_url) %}
+                <a href="{{ full_webpage_url }}" class="align-self-center mr-3">
+                    <img src="{{ url_for('static', filename=('video_thumbnails/'+thumbnail)) }}"
+                         alt="{{ title }}" style="width: 150px;">
+                </a>
                 <div class="media-body">
-                    <h5 class="mt-0">{{ title }}</h5>
+                    <a href="{{ full_webpage_url }}" class="text-body">
+                        <h5 class="mt-0">{{ title }}</h5>
+                    </a>
 
                     {{ description }}
                 </div>

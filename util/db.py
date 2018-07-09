@@ -1,8 +1,9 @@
+from sshtunnel import SSHTunnelForwarder
 import os
 import psycopg2
 import psycopg2.extensions
+import typing
 import util
-from sshtunnel import SSHTunnelForwarder
 
 
 def connect_to_database():
@@ -37,4 +38,6 @@ def connect_to_database():
         return None, conn
 
 
-sshforwarding, connection = connect_to_database()
+sshforwarding, connection = connect_to_database() # type: typing.Union[typing.Any, SSHTunnelForwarder], psycopg2.extensions.connection
+
+

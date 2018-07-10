@@ -1,20 +1,31 @@
 from bleach_whitelist import bleach_whitelist
 from flask import Flask, templating, abort
-from flask_htmlmin import HTMLMIN
+from htmlmin.minify import html_minify
 from math import ceil
 import bleach
 import datetime
 import markdown
+import markdown.extensions
 import markdown.inlinepatterns
 import markdown.treeprocessors
-import markdown.extensions
 import markdown.util
+import os
 import psycopg2.extensions
+import thumbnails
 import util
 
 app = Flask(__name__)
-app.config['MINIFY_PAGE'] = True
-HTMLMIN(app)
+
+
+@app.after_request
+def minify_request(response):
+    if response.content_type == u'text/html; charset=utf-8':
+        response.set_data(
+            html_minify(response.get_data(as_text=True))
+        )
+
+        return response
+    return response
 
 
 def get_year():
@@ -22,6 +33,8 @@ def get_year():
 
 
 app.jinja_env.globals.update(get_year=get_year)
+app.jinja_env.globals.update(get_thumbnail_url=thumbnails.get_thumbnail_url)
+app.jinja_env.globals.update(DEVELOPMENT=os.getenv('FLASK_DEBUG', '0') == '1')
 
 
 @app.errorhandler(403)
@@ -109,7 +122,7 @@ def render_video_paginated_list(page=1, number=10):
             cursor.execute("SELECT COUNT(*) FROM videos")
             number_of_videos = cursor.fetchone()[0]
 
-            if ((page - 1) * number + 1 > number_of_videos):
+            if (page - 1) * number + 1 > number_of_videos:
                 abort(404)
 
             cursor.execute("SELECT thumbnail_url, title, plaintext_short_description, "
@@ -120,10 +133,10 @@ def render_video_paginated_list(page=1, number=10):
                            "OFFSET %s",
                            (number, (page - 1) * number))
 
-            video_list = cursor.fetchall()
+            videos = cursor.fetchall()
 
     return templating.render_template("videos.html",
-                                      video_list=video_list,
+                                      video_list=videos,
                                       video_count=number_of_videos,
                                       page_num=page,
                                       page_count=int(ceil(number_of_videos / number)),

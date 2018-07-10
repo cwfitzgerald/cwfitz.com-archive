@@ -1,4 +1,8 @@
-__pycache__/*
+**/__pycache__
+
+build*/
+static/video_thumbnails/
+!static/video_thumbnails/src/file.empty
 
 .idea/*
 venv*/*

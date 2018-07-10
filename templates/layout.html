@@ -3,10 +3,14 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}"
-          integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/footer.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/fontawesome-all.min.css') }}">
+    {% if DEVELOPMENT %}
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}"
+              integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/footer.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/fontawesome-all.min.css') }}">
+    {% else %}
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/sum.css') }}">
+    {% endif %}
     <link rel="shortcut icon" type="image/png" href="{{ url_for('static', filename='favicon.png') }}"/>
     {% block head %}
         <title>Connor W Fitzgerald</title>

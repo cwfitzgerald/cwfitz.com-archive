@@ -8,7 +8,7 @@
             <div class="media m-2">
                 {% set full_webpage_url = url_for('video_info', page_name=webpage_url) %}
                 <a href="{{ full_webpage_url }}" class="align-self-center mr-3">
-                    <img src="{{ url_for('static', filename=('video_thumbnails/'+thumbnail)) }}"
+                    <img src="{{ get_thumbnail_url(thumbnail, 150, -1) }}"
                          alt="{{ title }}" style="width: 150px;">
                 </a>
                 <div class="media-body">

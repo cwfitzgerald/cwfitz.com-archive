@@ -3,7 +3,7 @@
 {% block content %}
     <div class="text-center">
         <h1 class="">{{ title }}</h1>
-        <img src="{{ url_for('static', filename=("video_thumbnails/" + thumbnail_url)) }}" class="w-100 mb-3"/>
+        <img src="{{ get_thumbnail_url(thumbnail_url, 500, -1) }}" class="w-100 mb-3"/>
 
         <h5 class="font-weight-bold">Description:</h5>
 
@@ -23,6 +23,4 @@
             Watch or Download <a href="#{{ download_url }}">Directly</a>.
         {% endif %}
     </div>
-
-
 {% endblock content %}

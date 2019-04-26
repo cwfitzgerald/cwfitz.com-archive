@@ -1,0 +1,51 @@
+<div class="border mt-3 rounded">
+    <div class="m-2 row">
+        <div class="col-12 col-sm-5 col-md-4 col-lg-6 col-xl-4 align-self-center">
+            {% set full_webpage_url = url_for('video_info', page_name=webpage_url) %}
+            <a href="{{ full_webpage_url }}">
+                <picture>
+                    {% for size in range(213, 213 + 300 + 1, 100) %}
+                        <source srcset="{{ get_thumbnail_url(thumbnail, size, -1) }}"
+                                media="(max-width: {{ [size + 92, 576] | min }}px)">
+                    {% endfor %}
+                    <img src="{{ get_thumbnail_url(thumbnail, 313, -1) }}"
+                         alt="{{ title }}" class="w-100">
+                </picture>
+            </a>
+        </div>
+
+        <div class="col-12 col-sm-7 col-md-8 col-lg-6 col-xl-8 d-flex flex-column p-0 pl-1">
+            <div class="mb-auto">
+                <a href="{{ full_webpage_url }}" class="text-body">
+                    <h5 class="mt-0 video-title">{{ title }}</h5>
+                </a>
+
+                {{ description }}<br/>
+
+                Watch via
+
+                {% if youtube_url %}
+                    <a href="https://youtube.com/watch?v={{ youtube_url }}">Youtube</a>{#
+                    #}{% if vimeo_url or download_url and not (vimeo_url and download_url) %} or{#
+                    #}{% elif vimeo_url and download_url %}, {% else %}.{% endif %}
+                {% endif %}
+                {% if vimeo_url %}
+                    <a href="https://vimeo.com/{{ vimeo_url }}">Vimeo</a>{#
+                    #}{% if download_url %}{% if youtube_url %},{% endif %} or {% else %}.{% endif %}
+                {% endif %}
+                {% if download_url %}
+                    <a href="#{{ download_url }}">Watch or Download Directly</a>.
+                {% endif %}
+            </div>
+
+            <div >
+                <div class="float-left font-weight-bold">
+                    Released: {{ "{:4.0f}-{:0>2.0f}-{:0>2.0f}".format(release_date.year, release_date.month, release_date.day) }}
+                </div>
+                <div class="float-right mr-2">
+                    dist
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,24 +1,9 @@
 {% extends "layout.html" %}
 
 {% block content %}
-    <h2 class="mb-1 ml-2"><a href="{{ url_for('video_list') }}">Videos</a></h2>
+    <h2 class="mb-1 ml-2 homepage-title"><a href="{{ url_for('video_list') }}">Videos</a></h2>
 
-    {% for thumbnail, title, description, youtube_url, vimeo_url, download_url, webpage_url in video_list %}
-        <div class="border mt-3 rounded">
-            <div class="media m-2">
-                {% set full_webpage_url = url_for('video_info', page_name=webpage_url) %}
-                <a href="{{ full_webpage_url }}" class="align-self-center mr-3">
-                    <img src="{{ get_thumbnail_url(thumbnail, 150, -1) }}"
-                         alt="{{ title }}" style="width: 150px;">
-                </a>
-                <div class="media-body">
-                    <a href="{{ full_webpage_url }}" class="text-body">
-                        <h5 class="mt-0">{{ title }}</h5>
-                    </a>
-
-                    {{ description }}
-                </div>
-            </div>
-        </div>
+    {% for thumbnail, title, description, youtube_url, vimeo_url, download_url, webpage_url, release_date in video_list %}
+        {% include 'video_preview.html' %}
     {% endfor %}
 {% endblock content %}

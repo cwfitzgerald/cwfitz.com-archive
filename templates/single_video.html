@@ -1,26 +1,41 @@
 {% extends "layout.html" %}
 
 {% block content %}
-    <div class="text-center">
-        <h1 class="">{{ title }}</h1>
-        <img src="{{ get_thumbnail_url(thumbnail_url, 500, -1) }}" class="w-100 mb-3"/>
-
-        <h5 class="font-weight-bold">Description:</h5>
-
-        <div>
-            {{ description | safe }}
+    <div class="row">
+        <div class="col-12 text-center">
+            <h1>{{ title }}</h1>
+            <picture>
+                {% for size in range(213, 1013 + 1, 100) %}
+                    <source srcset="{{ get_thumbnail_url(thumbnail, size, -1) }}" media="(max-width: {{ [size + 50, 991] | min  }}px)">
+                {% endfor %}
+                {% for size in range(513, 1013 + 1, 100) %}
+                    <source srcset="{{ get_thumbnail_url(thumbnail, size, -1) }}" media="(max-width: {{ [size * 2, 991] | max }}px)">
+                {% endfor %}
+                <img src="{{ get_thumbnail_url(thumbnail, 913, -1) }}"
+                     alt="{{ title }}" class="w-100 mb-3">
+            </picture>
         </div>
 
-        {% if youtube_url %}
-            Watch via <a href="http://youtube.com/watch?v={{ youtube_url }}">Youtube</a>.
-            <br/>
-        {% endif %}
-        {% if vimeo_url %}
-            Watch via <a href="http://vimeo.com/{{ vimeo_url }}">Vimeo</a>.
-            <br/>
-        {% endif %}
-        {% if static_download %}
-            Watch or Download <a href="#{{ download_url }}">Directly</a>.
-        {% endif %}
+        <div class="col-lg-1"></div>
+        <div class="col-md-12 col-lg-10 text-center">
+            <h5 class="font-weight-bold">Description</h5>
+
+            <div>
+                {{ description | safe }}
+            </div>
+
+            {% if youtube_url %}
+                Watch via <a href="http://youtube.com/watch?v={{ youtube_url }}">Youtube</a>.
+                <br/>
+            {% endif %}
+            {% if vimeo_url %}
+                Watch via <a href="http://vimeo.com/{{ vimeo_url }}">Vimeo</a>.
+                <br/>
+            {% endif %}
+            {% if static_download %}
+                Watch or Download <a href="#{{ download_url }}">Directly</a>.
+            {% endif %}
+        </div>
+        <div class="col-lg-1"></div>
     </div>
 {% endblock content %}

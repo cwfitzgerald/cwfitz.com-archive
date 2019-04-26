@@ -1,0 +1,9 @@
+build-time: css dead code elimination + css minification 
+            TBD: google-closure-compiler (aggressive js minifier)
+backend: flask (w/ minification) + nginx (w/ caching + gzip) + postgresql 
+         TBD: memcached
+frontend: bootstrap 
+          TBD: scala.js (for webtoys)
+
+186Kb source css -> 9.6Kb minified -> 2.7Kb over the wire
+14Kb frontpage

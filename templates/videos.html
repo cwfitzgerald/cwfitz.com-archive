@@ -3,38 +3,8 @@
 {% block content %}
     <h2 class="mb-1 ml-2"><a href="{{ url_for('video_list') }}">Videos</a></h2>
 
-    {% for thumbnail, title, description, youtube_url, vimeo_url, download_url, webpage_url in video_list %}
-        <div class="border mt-3 rounded">
-            <div class="media m-2">
-                {% set full_webpage_url = url_for('video_info', page_name=webpage_url) %}
-                <a href="{{ full_webpage_url }}" class="align-self-center mr-3">
-                    <img src="{{ get_thumbnail_url(thumbnail, 150, -1) }}"
-                         alt="{{ title }}" style="width: 150px;">
-                </a>
-                <div class="media-body">
-                    <a href="{{ full_webpage_url }}" class="text-body">
-                        <h5 class="mt-0">{{ title }}</h5>
-                    </a>
-
-                    {{ description }}<br/>
-
-                    Watch on
-
-                    {% if youtube_url %}
-                        <a href="https://youtube.com/watch?v={{ youtube_url }}">Youtube</a>{#
-                        #}{% if vimeo_url or download_url and not (vimeo_url and download_url) %} or{#
-                        #}{% elif vimeo_url and download_url %}, {% else %}.{% endif %}
-                    {% endif %}
-                    {% if vimeo_url %}
-                        <a href="https://vimeo.com/{{ vimeo_url }}">Vimeo</a>{#
-                        #}{% if download_url %}{% if youtube_url %},{% endif %} or {% else %}.{% endif %}
-                    {% endif %}
-                    {% if download_url %}
-                        <a href="#{{ download_url }}">Watch or Download Directly</a>.
-                    {% endif %}
-                </div>
-            </div>
-        </div>
+    {% for thumbnail, title, description, youtube_url, vimeo_url, download_url, webpage_url, release_date in video_list %}
+        {% include 'video_preview.html' %}
     {% endfor %}
 
     <nav aria-label="Video Navigation" class="mt-3">

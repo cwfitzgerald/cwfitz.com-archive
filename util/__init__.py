@@ -1,2 +1,2 @@
 from .util import *
-from .db import connection, sshforwarding
+from .db import connection

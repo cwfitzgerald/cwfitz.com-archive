@@ -4,5 +4,8 @@ build*/
 static/video_thumbnails/
 !static/video_thumbnails/src/file.empty
 
+known_hosts
+
 .idea/*
 venv*/*
+s/

@@ -7,6 +7,8 @@ import util
 
 
 def connect_to_database():
+    global sshforward
+
     cwf_user = os.environ['CWF_USER']
     cwf_pass = os.environ['CWF_PASS']
 
@@ -28,16 +30,22 @@ def connect_to_database():
     else:
         available_port = 5432
 
-    conn = psycopg2.connect(
-        "postgresql://{user:s}:{password:s}@localhost:{port:d}/connorwfitzgerald_com".format(user=cwf_user, password=cwf_pass,
-                                                                                             port=available_port)) # type: psycopg2.extensions.connection
-
-    if cwf_use_ssh == "1":
-        return sshforward, conn
+    if util.development_mode():
+        conn = psycopg2.connect(
+            "postgresql://{user:s}:{password:s}@localhost:{port:d}/connorwfitzgerald_dev".format(user=cwf_user,
+                                                                                                 password=cwf_pass,
+                                                                                                 port=available_port))
+        # type: psycopg2.extensions.connection
     else:
-        return None, conn
+        conn = psycopg2.connect(
+            "postgresql://{user:s}:{password:s}@localhost:{port:d}/connorwfitzgerald_prod".format(user=cwf_user,
+                                                                                                 password=cwf_pass,
+                                                                                                 port=available_port))
+        # type: psycopg2.extensions.connection
+
+    return conn
 
 
-sshforwarding, connection = connect_to_database() # type: typing.Union[typing.Any, SSHTunnelForwarder], psycopg2.extensions.connection
+connection = connect_to_database() # type: psycopg2.extensions.connection
 
 

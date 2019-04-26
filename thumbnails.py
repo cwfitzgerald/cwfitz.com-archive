@@ -1,9 +1,12 @@
 from PIL import Image
 import filelock
-import os.path
+import os
 
 
 def get_thumbnail_url(stem : str, width : int, height : int) -> str:
+    if not os.path.exists("static/video_thumbnails/thumb"):
+        os.mkdir("static/video_thumbnails/thumb")
+
     source_path = os.path.join("static/video_thumbnails/src/", "{}.png".format(stem))
     dest_path = os.path.join("static/video_thumbnails/thumb/", "{:s}-{:.0f}x{:.0f}px.jpg".format(stem, width, height))
 
@@ -26,7 +29,7 @@ def get_thumbnail_url(stem : str, width : int, height : int) -> str:
 
         img.save(dest_path, 'jpeg', optimize=True, quality=70, subsampling=2)
 
-    if not lock.is_locked:
+    if not lock.is_locked and os.path.exists(lock.lock_file):
         os.remove(lock.lock_file)
 
     return "/" + dest_path
